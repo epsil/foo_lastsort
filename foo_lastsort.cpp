@@ -133,7 +133,7 @@ pfc::list_t<metadb_handle_ptr> get_sorted_playlist(const pfc::list_base_const_t<
 		message.reset();
 		message << "Track " << i + 1 << " of " << size;
 		p_status.set_item(message);
-		p_status.set_progress(i, size);
+		p_status.set_progress(i + 1, size);
 
 		timer.start();
 
@@ -229,7 +229,7 @@ class my_contextmenu : public contextmenu_item_simple {
 	// Execute command.
 	virtual void context_command(unsigned p_index, const pfc::list_base_const_t<metadb_handle_ptr> &p_data, const GUID &p_caller) {
 		service_ptr_t<threaded_process_callback> tpc = new service_impl_t<playlist_sort_worker>();
-		threaded_process::g_run_modeless(tpc, threaded_process::flag_show_abort | threaded_process::flag_show_item, core_api::get_main_window(), "Sorting by playcount");
+		threaded_process::g_run_modeless(tpc, threaded_process::flag_show_abort | threaded_process::flag_show_progress | threaded_process::flag_show_item, core_api::get_main_window(), "Sorting by playcount");
 	}
 
 	// All commands are identified by a GUID.
